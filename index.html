@@ -5,30 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RifqySearch</title>
     <style>
-        /* --- 1. RESET & LAYOUT DASAR --- */
+        /* --- 1. SETTING DASAR (DARK MODE) --- */
         body {
-            font-family: 'Google Sans', 'Roboto', Arial, sans-serif; /* Font ala Google */
+            font-family: 'Arial', sans-serif;
+            background-color: #202124; /* Hitam Google */
+            color: #e8eaed;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Memastikan semua elemen tengah */
+        }
+
+        /* --- 2. PEMBUNGKUS UTAMA (Main Container) --- */
+        /* Ini kunci supaya semuanya RATA (Aligned) */
+        .main-container {
+            width: 100%;
+            max-width: 650px; /* Lebar maksimal di Desktop (Standar Google) */
+            padding: 0 20px;  /* Jarak pinggir di HP */
+            box-sizing: border-box;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 0;
-            background-color: #202124; /* Dark Background */
-            color: #e8eaed;
-            overflow-x: hidden;
         }
 
-        /* --- 2. LOGO --- */
+        /* --- 3. LOGO --- */
         .logo-container {
-            margin-top: 8vh;
-            margin-bottom: 20px;
+            margin-top: 10vh; /* Posisi vertikal logo */
+            margin-bottom: 30px;
             text-align: center;
-            padding: 0 10px;
+            width: 100%;
         }
 
         .logo {
-            font-size: clamp(40px, 12vw, 70px);
+            font-size: clamp(36px, 10vw, 72px); /* Responsif */
             font-weight: bold;
             letter-spacing: -2px;
             user-select: none;
@@ -42,238 +53,160 @@
         .logo span:nth-child(5) { color: #34a853; }
         .logo span:nth-child(6) { color: #ea4335; }
 
-        /* --- 3. CONTAINER PENCARIAN --- */
-        .search-wrapper {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            z-index: 10;
-        }
-
-        .search-container {
-            width: 90%;
-            max-width: 680px;
-            position: relative;
-            margin-bottom: 15px;
-        }
-
-        /* --- 4. NAVIGATION BAR (MENU GOOGLE) --- */
-        .nav-bar-container {
-            width: 100%;
-            max-width: 680px;
-            padding-left: 20px; /* Padding kiri agar sejajar di Desktop */
-            box-sizing: border-box;
+        /* --- 4. AREA PENCARIAN --- */
+        .search-box-wrapper {
+            width: 100%; /* Mengikuti lebar main-container */
             margin-bottom: 10px;
         }
 
-        /* Scrollable Menu di HP */
-        .nav-bar {
-            display: flex;
-            gap: 10px;
-            overflow-x: auto;
-            white-space: nowrap;
-            padding-bottom: 5px; /* Ruang untuk scrollbar */
-            scrollbar-width: none; /* Firefox sembunyikan scrollbar */
-            -ms-overflow-style: none; /* IE/Edge sembunyikan scrollbar */
-        }
+        /* --- 5. OVERRIDE TOTAL GOOGLE CSE (Agar Rata & Gelap) --- */
         
-        .nav-bar::-webkit-scrollbar {
-            display: none; /* Chrome/Safari sembunyikan scrollbar */
-        }
-
-        /* Tombol Navigasi (Chips) */
-        .nav-item {
-            display: inline-flex;
-            align-items: center;
-            padding: 8px 16px;
-            background-color: #303134;
-            border: 1px solid #3c4043;
-            border-radius: 100px; /* Bentuk Pill */
-            font-size: 14px;
-            color: #e8eaed;
-            cursor: pointer;
-            transition: background 0.2s;
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .nav-item:hover {
-            background-color: #3c4043;
-        }
-
-        /* Navigasi Aktif (Semua) */
-        .nav-item.active {
-            background-color: #45474a; /* Sedikit lebih terang */
-            border-color: #5f6368;
-        }
-
-        /* KHUSUS: Mode AI (Gradient Border) */
-        .nav-item.ai-mode {
-            background: linear-gradient(#303134, #303134) padding-box,
-                        linear-gradient(45deg, #4285f4, #ea4335, #fbbc05, #34a853) border-box;
-            border: 2px solid transparent;
-            color: #fff;
-        }
-        
-        .nav-item.ai-mode svg {
-            margin-right: 6px;
-            width: 16px;
-            height: 16px;
-            fill: url(#ai-gradient);
-        }
-
-        /* Ikon Navigasi */
-        .nav-icon {
-            margin-right: 6px;
-            font-size: 16px;
-        }
-
-        /* Tombol 'Alat' biasanya teks saja atau di ujung */
-        .nav-item.tools {
-            border: none;
-            background: transparent;
-            color: #9aa0a6;
-        }
-
-        /* --- 5. OVERRIDE GOOGLE CSE --- */
+        /* Reset Padding Bawaan Google yg bikin berantakan */
         .gsc-control-cse {
             padding: 0 !important;
             background-color: transparent !important;
             border: none !important;
         }
+
+        /* Input Box (Kotak Ketik) */
         .gsc-input-box {
             background-color: #303134 !important;
             border: 1px solid #5f6368 !important;
             border-radius: 24px !important;
             height: 48px !important;
-            padding: 0 15px !important;
+            padding: 0 20px !important; /* Padding dalam kotak */
+            box-shadow: none !important;
+            outline: none !important;
         }
+        
+        /* Efek Hover di Input Box */
+        .gsc-input-box:hover, .gsc-input-box-focus {
+            background-color: #3c4043 !important;
+            box-shadow: 0 1px 6px rgba(0,0,0,0.3) !important;
+            border-color: transparent !important;
+        }
+
+        /* Teks Input */
         .gsc-input {
             color: #fff !important; 
+            font-size: 16px !important;
             background: transparent !important;
         }
+
+        /* Tombol Cari (Kaca Pembesar) */
         button.gsc-search-button {
             border: none !important;
             background: transparent !important;
             margin-left: 10px;
         }
         button.gsc-search-button svg {
-            fill: #9aa0a6 !important;
+            fill: #9aa0a6 !important; /* Warna ikon abu-abu */
         }
-        
-        /* Hasil Pencarian Gelap */
-        .gsc-webResult.gsc-result, .gsc-results .gsc-imageResult, .gsc-wrapper {
+
+        /* --- 6. HASIL PENCARIAN (GELAP & JELAS) --- */
+        .gsc-webResult.gsc-result, 
+        .gsc-results .gsc-imageResult,
+        .gsc-wrapper {
             background-color: #202124 !important;
+            padding: 0 !important; /* Reset padding hasil supaya rata kiri-kanan */
         }
-        .gs-title { color: #8ab4f8 !important; text-decoration: none !important; }
-        .gs-snippet { color: #bdc1c6 !important; }
-        .gs-visibleUrl { color: #9aa0a6 !important; }
-        .gsc-cursor-page { color: #8ab4f8 !important; }
-        .gsc-cursor-current-page { color: #fff !important; font-weight: bold !important; }
 
-        /* Sembunyikan elemen bawaan yang mengganggu */
-        .gsc-result-info, .gcsc-branding, .gsc-above-wrapper-area { display: none !important; }
-        .gs-webResult { border-bottom: 1px solid #3c4043 !important; padding: 15px 0 !important; }
+        /* Judul Hasil (Biru Google Modern) */
+        .gs-title {
+            color: #8ab4f8 !important;
+            text-decoration: none !important;
+            font-size: 18px !important;
+            line-height: 1.3 !important;
+        }
 
-        /* --- BRANDING RIFQYSHIELD --- */
+        /* Deskripsi Hasil (Abu Terang) */
+        .gs-snippet {
+            color: #bdc1c6 !important;
+            font-size: 14px !important;
+            line-height: 1.58 !important;
+            margin-top: 5px !important;
+        }
+
+        /* URL Website */
+        .gs-visibleUrl {
+            color: #dadce0 !important;
+            font-size: 14px !important;
+            padding-bottom: 2px !important;
+        }
+
+        /* Garis Pemisah Antar Hasil */
+        .gs-webResult {
+            border-bottom: 1px solid #3c4043 !important;
+            padding: 20px 0 !important;
+        }
+
+        /* Menghilangkan elemen sampah Google */
+        .gsc-result-info,       /* Teks "Sekian hasil..." */
+        .gcsc-branding,         /* Logo Google kecil */
+        .gsc-above-wrapper-area /* Garis atas */
+        { display: none !important; }
+
+        /* Pagination (Halaman 1 2 3) */
+        .gsc-cursor-page {
+            color: #8ab4f8 !important;
+            font-size: 16px !important;
+            margin-right: 15px !important;
+        }
+        .gsc-cursor-current-page {
+            color: #fff !important;
+        }
+
+        /* --- 7. BRANDING RIFQYSHIELD --- */
         .shield-badge {
-            margin-top: 30px;
+            margin-top: 25px;
             font-size: 13px;
             color: #9aa0a6;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            padding: 6px 14px;
+            gap: 8px;
+            background-color: #303134;
+            padding: 8px 16px;
             border-radius: 50px;
-            background: #292a2d;
+            border: 1px solid #5f6368;
         }
         .shield-icon { color: #34a853; }
         .shield-badge strong { color: #e8eaed; }
 
-        /* --- FOOTER --- */
+        /* --- 8. FOOTER --- */
         footer {
-            margin-top: auto;
-            padding: 20px;
-            color: #5f6368;
-            font-size: 12px;
+            margin-top: auto; /* Dorong ke paling bawah */
+            padding: 30px;
+            color: #70757a;
+            font-size: 13px;
             text-align: center;
         }
-        
-        /* Definisi Gradient SVG untuk ikon AI */
-        svg { overflow: visible; }
     </style>
 </head>
 <body>
 
-    <svg width="0" height="0">
-        <linearGradient id="ai-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop stop-color="#4285f4" offset="0%" />
-            <stop stop-color="#ea4335" offset="25%" />
-            <stop stop-color="#fbbc05" offset="50%" />
-            <stop stop-color="#34a853" offset="75%" />
-        </linearGradient>
-    </svg>
-
-    <div class="logo-container">
-        <div class="logo">
-            <span>R</span><span>i</span><span>f</span><span>q</span><span>y</span><span>S</span>earch
+    <div class="main-container">
+        
+        <div class="logo-container">
+            <div class="logo">
+                <span>R</span><span>i</span><span>f</span><span>q</span><span>y</span><span>S</span>earch
+            </div>
         </div>
-    </div>
 
-    <div class="search-wrapper">
-        <div class="search-container">
+        <div class="search-box-wrapper">
             <script async src="https://cse.google.com/cse.js?cx=220c12a21a6d44f35"></script>
             <div class="gcse-search"></div>
-        </div>
-
-        <div class="nav-bar-container">
-            <div class="nav-bar">
-                <a href="#" class="nav-item ai-mode">
-                    <svg viewBox="0 0 24 24" width="16" height="16">
-                        <path d="M19,9l1.25-2.75L23,5l-2.75-1.25L19,1l-1.25,2.75L15,5l2.75,1.25L19,9z M11.5,11.5L9,6L6.5,11.5L1,14l5.5,2.5L9,22l2.5-5.5L17,14L11.5,11.5z"></path>
-                    </svg>
-                    Mode AI
-                </a>
-
-                <div class="nav-item active">Semua</div>
-                <div class="nav-item">Gambar</div>
-                <div class="nav-item">Shopping</div>
-                <div class="nav-item">Video</div>
-                <div class="nav-item">Berita</div>
-                <div class="nav-item">Video singkat</div>
-                <div class="nav-item">Lainnya</div>
-                <div class="nav-item tools">Alat</div>
-            </div>
         </div>
 
         <div class="shield-badge">
             <span class="shield-icon">🛡️</span> 
             Protected by <strong>RifqyShield</strong>
         </div>
+
     </div>
 
     <footer>
-        &copy; 2025 RifqySearch &bull; Powered by Google
+        &copy; 2025 RifqySearch
     </footer>
-
-    <script>
-        // Membuat tombol navigasi bisa diklik (hanya visual)
-        const navItems = document.querySelectorAll('.nav-item:not(.tools)');
-        navItems.forEach(item => {
-            item.addEventListener('click', function() {
-                // Hapus kelas active dari semua
-                navItems.forEach(nav => nav.classList.remove('active'));
-                // Tambah kelas active ke yang diklik
-                this.classList.add('active');
-                
-                // Catatan: Karena ini CSE JS Widget, fungsi tab asli (Gambar/Video) 
-                // sebenarnya otomatis muncul di dalam widget jika diaktifkan di panel Google.
-                // Tombol ini sekarang berfungsi sebagai UI/Navigasi visual.
-            });
-        });
-    </script>
 
 </body>
 </html>
