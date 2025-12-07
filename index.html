@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RifqySearch</title>
+    <style>
+        /* --- Tampilan Dasar (Dark Mode) --- */
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #202124;
+            color: #e8eaed;
+        }
+
+        /* --- Logo RifqySearch --- */
+        .logo-container {
+            margin-top: 15vh;
+            margin-bottom: 20px;
+            text-align: center;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .logo {
+            font-size: clamp(40px, 10vw, 80px); /* Responsif di HP */
+            font-weight: bold;
+            letter-spacing: -2px;
+            user-select: none;
+        }
+
+        /* Warna-warni huruf ala Google */
+        .logo span:nth-child(1) { color: #4285f4; } /* R */
+        .logo span:nth-child(2) { color: #ea4335; } /* i */
+        .logo span:nth-child(3) { color: #fbbc05; } /* f */
+        .logo span:nth-child(4) { color: #4285f4; } /* q */
+        .logo span:nth-child(5) { color: #34a853; } /* y */
+        .logo span:nth-child(6) { color: #ea4335; } /* S */
+
+        /* --- Container Pencarian --- */
+        .search-container {
+            width: 100%;
+            max-width: 680px;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        /* --- Branding RifqyShield --- */
+        .shield-badge {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #9aa0a6;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background-color: #303134;
+            padding: 8px 16px;
+            border-radius: 50px;
+            border: 1px solid #5f6368;
+        }
+
+        .shield-badge strong {
+            color: #e8eaed;
+        }
+        
+        /* Ikon Perisai Hijau */
+        .shield-icon {
+            color: #34a853; 
+        }
+
+        /* --- Kustomisasi Paksa Tampilan Google CSE --- */
+        .gsc-control-cse {
+            background-color: transparent !important;
+            border: none !important;
+            padding: 0 !important;
+        }
+        
+        /* Kotak Input */
+        .gsc-input-box {
+            border-radius: 24px !important;
+            border: 1px solid #5f6368 !important;
+            background-color: #303134 !important;
+            height: 48px !important;
+            padding: 0 15px !important;
+            box-shadow: 0 1px 6px rgba(0,0,0,0.3);
+        }
+
+        .gsc-input {
+            background: transparent !important;
+            color: white !important;
+            padding-right: 10px;
+        }
+
+        /* Tombol Cari (Kaca Pembesar) */
+        button.gsc-search-button {
+            background-color: transparent !important;
+            border: none !important;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        
+        /* Menghilangkan border focus biru default */
+        .gsc-input-box-hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5) !important;
+        }
+
+        /* Hasil Pencarian (Supaya terbaca di dark mode) */
+        .gsc-webResult.gsc-result, .gsc-results .gsc-imageResult {
+            background-color: transparent !important;
+            border-color: transparent !important;
+        }
+        .gs-title, .gs-snippet {
+            color: #e8eaed !important;
+        }
+        .gs-title b {
+            color: #e8eaed !important;
+        }
+        .gs-visibleUrl {
+            color: #9aa0a6 !important;
+        }
+
+        /* --- Footer --- */
+        footer {
+            margin-top: auto;
+            padding: 20px;
+            color: #9aa0a6;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        /* Animasi */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="logo-container">
+        <div class="logo">
+            <span>R</span><span>i</span><span>f</span><span>q</span><span>y</span><span>S</span>earch
+        </div>
+    </div>
+
+    <div class="search-container">
+        <script async src="https://cse.google.com/cse.js?cx=220c12a21a6d44f35"></script>
+        <div class="gcse-search"></div>
+    </div>
+
+    <div class="shield-badge">
+        <span class="shield-icon">🛡️</span> 
+        Protected by <strong>RifqyShield</strong>
+    </div>
+
+    <footer>
+        &copy; 2025 RifqySearch &bull; Powered by Google & RifqyShield
+    </footer>
+
+</body>
+</html>
