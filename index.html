@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RifqySearch</title>
     <style>
-        /* --- Tampilan Dasar (Dark Mode) --- */
+        /* --- 1. RESET & LAYOUT DASAR --- */
         body {
             font-family: 'Arial', sans-serif;
             display: flex;
@@ -13,128 +13,166 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            background-color: #202124;
+            padding: 0;
+            background-color: #202124; /* Dark Background */
             color: #e8eaed;
         }
 
-        /* --- Logo RifqySearch --- */
+        /* --- 2. LOGO --- */
         .logo-container {
-            margin-top: 15vh;
-            margin-bottom: 20px;
+            margin-top: 12vh; /* Jarak dari atas */
+            margin-bottom: 25px;
             text-align: center;
-            animation: fadeIn 1s ease-in;
+            padding: 0 10px;
         }
 
         .logo {
-            font-size: clamp(40px, 10vw, 80px); /* Responsif di HP */
+            font-size: clamp(40px, 12vw, 80px); /* Otomatis mengecil di HP */
             font-weight: bold;
             letter-spacing: -2px;
             user-select: none;
         }
 
-        /* Warna-warni huruf ala Google */
-        .logo span:nth-child(1) { color: #4285f4; } /* R */
-        .logo span:nth-child(2) { color: #ea4335; } /* i */
-        .logo span:nth-child(3) { color: #fbbc05; } /* f */
-        .logo span:nth-child(4) { color: #4285f4; } /* q */
-        .logo span:nth-child(5) { color: #34a853; } /* y */
-        .logo span:nth-child(6) { color: #ea4335; } /* S */
+        /* Warna Logo */
+        .logo span:nth-child(1) { color: #4285f4; }
+        .logo span:nth-child(2) { color: #ea4335; }
+        .logo span:nth-child(3) { color: #fbbc05; }
+        .logo span:nth-child(4) { color: #4285f4; }
+        .logo span:nth-child(5) { color: #34a853; }
+        .logo span:nth-child(6) { color: #ea4335; }
 
-        /* --- Container Pencarian --- */
-        .search-container {
+        /* --- 3. CONTAINER PENCARIAN (RATA TENGAH & RESPONSIF) --- */
+        .search-wrapper {
             width: 100%;
-            max-width: 680px;
-            padding: 0 20px;
-            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        /* --- Branding RifqyShield --- */
+        .search-container {
+            width: 90%;          /* Lebar di HP */
+            max-width: 680px;    /* Batas lebar di Desktop */
+            position: relative;
+        }
+
+        /* --- 4. BRANDING RIFQYSHIELD --- */
         .shield-badge {
-            margin-top: 15px;
+            margin-top: 20px;
             font-size: 14px;
             color: #9aa0a6;
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             background-color: #303134;
             padding: 8px 16px;
             border-radius: 50px;
             border: 1px solid #5f6368;
         }
+        .shield-icon { color: #34a853; }
+        .shield-badge strong { color: #e8eaed; }
 
-        .shield-badge strong {
-            color: #e8eaed;
-        }
+
+        /* =========================================
+           5. OVERRIDE GOOGLE CSE (DARK MODE TOTAL)
+           Bagian ini memaksa hasil pencarian jadi gelap
+           ========================================= */
         
-        /* Ikon Perisai Hijau */
-        .shield-icon {
-            color: #34a853; 
-        }
-
-        /* --- Kustomisasi Paksa Tampilan Google CSE --- */
+        /* Hapus background transparan/putih bawaan */
         .gsc-control-cse {
-            background-color: transparent !important;
-            border: none !important;
             padding: 0 !important;
-        }
-        
-        /* Kotak Input */
-        .gsc-input-box {
-            border-radius: 24px !important;
-            border: 1px solid #5f6368 !important;
-            background-color: #303134 !important;
-            height: 48px !important;
-            padding: 0 15px !important;
-            box-shadow: 0 1px 6px rgba(0,0,0,0.3);
-        }
-
-        .gsc-input {
-            background: transparent !important;
-            color: white !important;
-            padding-right: 10px;
-        }
-
-        /* Tombol Cari (Kaca Pembesar) */
-        button.gsc-search-button {
             background-color: transparent !important;
             border: none !important;
-            margin-left: 10px;
-            cursor: pointer;
-        }
-        
-        /* Menghilangkan border focus biru default */
-        .gsc-input-box-hover {
-            box-shadow: 0 2px 8px rgba(0,0,0,0.5) !important;
         }
 
-        /* Hasil Pencarian (Supaya terbaca di dark mode) */
-        .gsc-webResult.gsc-result, .gsc-results .gsc-imageResult {
-            background-color: transparent !important;
-            border-color: transparent !important;
+        /* Input Box (Kotak Ketik) */
+        .gsc-input-box {
+            background-color: #303134 !important;
+            border: 1px solid #5f6368 !important;
+            border-radius: 24px !important;
+            height: 46px !important;
+            padding: 0 15px !important;
         }
-        .gs-title, .gs-snippet {
-            color: #e8eaed !important;
+        
+        /* Teks yang diketik */
+        .gsc-input {
+            color: #fff !important; 
+            font-size: 16px !important;
+            background: transparent !important;
         }
-        .gs-title b {
-            color: #e8eaed !important;
+        
+        /* Tombol Cari */
+        button.gsc-search-button {
+            border: none !important;
+            background: transparent !important;
+            margin-left: 10px;
         }
-        .gs-visibleUrl {
+        /* Ikon kaca pembesar jadi putih */
+        button.gsc-search-button svg {
+            fill: #9aa0a6 !important;
+        }
+
+        /* --- HASIL PENCARIAN (Biar Tidak Putih) --- */
+        
+        /* Background Container Hasil */
+        .gsc-webResult.gsc-result, 
+        .gsc-results .gsc-imageResult,
+        .gsc-results-wrapper-visible,
+        .gsc-results-wrapper-overlay,
+        .gsc-wrapper {
+            background-color: #202124 !important;
+        }
+
+        /* Judul Hasil Pencarian (Biru Terang) */
+        .gs-title, .gs-title b, .gs-title a {
+            color: #8ab4f8 !important;
+            text-decoration: none !important;
+            font-size: 18px !important;
+        }
+        
+        /* Deskripsi/Snippet (Abu-abu Terang - Biar Kelihatan) */
+        .gs-snippet {
+            color: #bdc1c6 !important;
+            font-size: 14px !important;
+            line-height: 1.5 !important;
+        }
+
+        /* URL di bawah judul (Hijau/Abu) */
+        .gs-visibleUrl, .gs-visibleUrl-short {
             color: #9aa0a6 !important;
         }
 
-        /* --- Footer --- */
+        /* Hover Effect pada hasil */
+        .gsc-webResult.gsc-result:hover {
+            background-color: #202124 !important;
+            border-left: none !important;
+        }
+
+        /* Menghilangkan garis/border jelek bawaan Google */
+        .gsc-result-info, .gcsc-branding, .gsc-url-top, .gsc-above-wrapper-area {
+            display: none !important; /* Hapus info "Sekian hasil..." biar bersih */
+        }
+        .gs-webResult {
+            border-bottom: 1px solid #3c4043 !important; /* Garis pemisah tipis */
+            padding: 15px 0 !important;
+        }
+
+        /* Pagination (Halaman 1, 2, 3...) */
+        .gsc-cursor-page {
+            color: #8ab4f8 !important;
+            background: transparent !important;
+        }
+        .gsc-cursor-current-page {
+            color: #fff !important;
+            font-weight: bold !important;
+        }
+
+        /* --- FOOTER --- */
         footer {
             margin-top: auto;
-            padding: 20px;
+            padding: 30px 20px;
             color: #9aa0a6;
             font-size: 13px;
             text-align: center;
-        }
-
-        /* Animasi */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -146,14 +184,16 @@
         </div>
     </div>
 
-    <div class="search-container">
-        <script async src="https://cse.google.com/cse.js?cx=220c12a21a6d44f35"></script>
-        <div class="gcse-search"></div>
-    </div>
+    <div class="search-wrapper">
+        <div class="search-container">
+            <script async src="https://cse.google.com/cse.js?cx=220c12a21a6d44f35"></script>
+            <div class="gcse-search"></div>
+        </div>
 
-    <div class="shield-badge">
-        <span class="shield-icon">🛡️</span> 
-        Protected by <strong>RifqyShield</strong>
+        <div class="shield-badge">
+            <span class="shield-icon">🛡️</span> 
+            Protected by <strong>RifqyShield</strong>
+        </div>
     </div>
 
     <footer>
