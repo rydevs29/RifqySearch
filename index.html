@@ -3,183 +3,226 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RifqySearch</title>
+    <title>RifqySearch - Secure & Fast</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
     <style>
-        /* --- 1. SETTING DASAR (DARK MODE) --- */
+        /* --- 1. VARIABEL & RESET --- */
+        :root {
+            --bg-color: #171717;
+            --card-bg: #262626;
+            --text-main: #ededed;
+            --text-muted: #a1a1aa;
+            --accent-blue: #3b82f6;
+            --accent-glow: rgba(59, 130, 246, 0.15);
+            --border-color: #404040;
+            --font-main: 'Inter', sans-serif;
+        }
+
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #202124; /* Hitam Google */
-            color: #e8eaed;
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-main);
             margin: 0;
             padding: 0;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center; /* Memastikan semua elemen tengah */
+            align-items: center;
+            overflow-x: hidden;
         }
 
-        /* --- 2. PEMBUNGKUS UTAMA (Main Container) --- */
-        /* Ini kunci supaya semuanya RATA (Aligned) */
+        a { text-decoration: none; color: inherit; transition: 0.2s; }
+
+        /* --- 2. LAYOUT UTAMA --- */
         .main-container {
             width: 100%;
-            max-width: 650px; /* Lebar maksimal di Desktop (Standar Google) */
-            padding: 0 20px;  /* Jarak pinggir di HP */
+            max-width: 800px;
+            padding: 40px 20px;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
             align-items: center;
+            animation: fadeIn 0.8s ease-out;
         }
 
-        /* --- 3. LOGO --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- 3. LOGO MODERN --- */
         .logo-container {
-            margin-top: 10vh; /* Posisi vertikal logo */
+            margin-top: 5vh;
             margin-bottom: 30px;
             text-align: center;
-            width: 100%;
         }
 
         .logo {
-            font-size: clamp(36px, 10vw, 72px); /* Responsif */
-            font-weight: bold;
+            font-size: 3.5rem;
+            font-weight: 700;
             letter-spacing: -2px;
-            user-select: none;
-            line-height: 1.2;
+            background: linear-gradient(90deg, #4285f4, #ea4335, #fbbc05, #34a853);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 15px rgba(255,255,255,0.1));
         }
 
-        .logo span:nth-child(1) { color: #4285f4; }
-        .logo span:nth-child(2) { color: #ea4335; }
-        .logo span:nth-child(3) { color: #fbbc05; }
-        .logo span:nth-child(4) { color: #4285f4; }
-        .logo span:nth-child(5) { color: #34a853; }
-        .logo span:nth-child(6) { color: #ea4335; }
-
-        /* --- 4. AREA PENCARIAN --- */
-        .search-box-wrapper {
-            width: 100%; /* Mengikuti lebar main-container */
-            margin-bottom: 10px;
+        /* --- 4. SEARCH BOX & SHIELD --- */
+        .search-wrapper {
+            width: 100%;
+            position: relative;
+            margin-bottom: 20px;
         }
 
-        /* --- 5. OVERRIDE TOTAL GOOGLE CSE (Agar Rata & Gelap) --- */
-        
-        /* Reset Padding Bawaan Google yg bikin berantakan */
+        /* Override Google CSE Styles for Premium Look */
         .gsc-control-cse {
             padding: 0 !important;
-            background-color: transparent !important;
+            background: transparent !important;
             border: none !important;
         }
-
-        /* Input Box (Kotak Ketik) */
         .gsc-input-box {
-            background-color: #303134 !important;
-            border: 1px solid #5f6368 !important;
-            border-radius: 24px !important;
-            height: 48px !important;
-            padding: 0 20px !important; /* Padding dalam kotak */
-            box-shadow: none !important;
-            outline: none !important;
+            background-color: var(--card-bg) !important;
+            border: 1px solid var(--border-color) !important;
+            border-radius: 16px !important;
+            height: 52px !important;
+            padding: 0 15px !important;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+            transition: all 0.3s ease !important;
         }
-        
-        /* Efek Hover di Input Box */
         .gsc-input-box:hover, .gsc-input-box-focus {
-            background-color: #3c4043 !important;
-            box-shadow: 0 1px 6px rgba(0,0,0,0.3) !important;
-            border-color: transparent !important;
+            border-color: var(--accent-blue) !important;
+            box-shadow: 0 0 0 4px var(--accent-glow) !important;
         }
-
-        /* Teks Input */
-        .gsc-input {
-            color: #fff !important; 
-            font-size: 16px !important;
-            background: transparent !important;
-        }
-
-        /* Tombol Cari (Kaca Pembesar) */
-        button.gsc-search-button {
-            border: none !important;
-            background: transparent !important;
-            margin-left: 10px;
-        }
-        button.gsc-search-button svg {
-            fill: #9aa0a6 !important; /* Warna ikon abu-abu */
-        }
-
-        /* --- 6. HASIL PENCARIAN (GELAP & JELAS) --- */
-        .gsc-webResult.gsc-result, 
-        .gsc-results .gsc-imageResult,
-        .gsc-wrapper {
-            background-color: #202124 !important;
-            padding: 0 !important; /* Reset padding hasil supaya rata kiri-kanan */
-        }
-
-        /* Judul Hasil (Biru Google Modern) */
-        .gs-title {
-            color: #8ab4f8 !important;
-            text-decoration: none !important;
-            font-size: 18px !important;
-            line-height: 1.3 !important;
-        }
-
-        /* Deskripsi Hasil (Abu Terang) */
-        .gs-snippet {
-            color: #bdc1c6 !important;
-            font-size: 14px !important;
-            line-height: 1.58 !important;
-            margin-top: 5px !important;
-        }
-
-        /* URL Website */
-        .gs-visibleUrl {
-            color: #dadce0 !important;
-            font-size: 14px !important;
-            padding-bottom: 2px !important;
-        }
-
-        /* Garis Pemisah Antar Hasil */
-        .gs-webResult {
-            border-bottom: 1px solid #3c4043 !important;
-            padding: 20px 0 !important;
-        }
-
-        /* Menghilangkan elemen sampah Google */
-        .gsc-result-info,       /* Teks "Sekian hasil..." */
-        .gcsc-branding,         /* Logo Google kecil */
-        .gsc-above-wrapper-area /* Garis atas */
-        { display: none !important; }
-
-        /* Pagination (Halaman 1 2 3) */
-        .gsc-cursor-page {
-            color: #8ab4f8 !important;
-            font-size: 16px !important;
-            margin-right: 15px !important;
-        }
-        .gsc-cursor-current-page {
-            color: #fff !important;
-        }
-
-        /* --- 7. BRANDING RIFQYSHIELD --- */
+        .gsc-input { color: #fff !important; font-family: var(--font-main) !important; }
+        button.gsc-search-button svg { fill: var(--text-muted) !important; }
+        
+        /* Shield Badge */
         .shield-badge {
-            margin-top: 25px;
-            font-size: 13px;
-            color: #9aa0a6;
-            display: inline-flex;
+            display: flex;
             align-items: center;
             gap: 8px;
-            background-color: #303134;
-            padding: 8px 16px;
-            border-radius: 50px;
-            border: 1px solid #5f6368;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            background: rgba(255,255,255,0.03);
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+            margin-bottom: 40px;
         }
-        .shield-icon { color: #34a853; }
-        .shield-badge strong { color: #e8eaed; }
+        .shield-badge strong { color: #4ade80; }
 
-        /* --- 8. FOOTER --- */
+        /* --- 5. BERITA (NEWS SECTION) --- */
+        .news-section {
+            width: 100%;
+            margin-top: 20px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 30px;
+        }
+
+        .news-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .news-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .news-source {
+            font-size: 0.8rem;
+            color: var(--accent-blue);
+            background: rgba(59, 130, 246, 0.1);
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        /* Kartu Berita */
+        .news-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 180px; /* Fixed height for uniformity */
+            transition: transform 0.2s, border-color 0.2s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .news-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent-blue);
+            background-color: #2a2a2a;
+        }
+
+        .news-card h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            line-height: 1.5;
+            margin: 0 0 10px 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 3; /* Limit text lines */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            color: #fff;
+        }
+
+        .news-meta {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Loading Skeleton */
+        .skeleton {
+            background: linear-gradient(90deg, #262626 25%, #333 50%, #262626 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+        @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+        /* --- 6. FOOTER --- */
         footer {
-            margin-top: auto; /* Dorong ke paling bawah */
+            margin-top: auto;
             padding: 30px;
-            color: #70757a;
-            font-size: 13px;
+            color: #525252;
+            font-size: 0.8rem;
             text-align: center;
         }
+        
+        /* CSS HACKS untuk Hasil Pencarian Google agar RAPI */
+        .gsc-webResult.gsc-result, .gsc-results .gsc-imageResult {
+            background-color: transparent !important;
+            padding: 15px 0 !important;
+            border-bottom: 1px solid #333 !important;
+        }
+        .gs-title { color: #60a5fa !important; text-decoration: none !important; }
+        .gs-snippet { color: #d4d4d4 !important; }
+        .gs-visibleUrl { color: #9ca3af !important; }
+        .gsc-result-info, .gcsc-branding { display: none !important; }
+
     </style>
 </head>
 <body>
@@ -187,26 +230,121 @@
     <div class="main-container">
         
         <div class="logo-container">
-            <div class="logo">
-                <span>R</span><span>i</span><span>f</span><span>q</span><span>y</span><span>S</span>earch
-            </div>
+            <div class="logo">RifqySearch</div>
         </div>
 
-        <div class="search-box-wrapper">
+        <div class="search-wrapper">
             <script async src="https://cse.google.com/cse.js?cx=220c12a21a6d44f35"></script>
             <div class="gcse-search"></div>
         </div>
 
         <div class="shield-badge">
-            <span class="shield-icon">🛡️</span> 
-            Protected by <strong>RifqyShield</strong>
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
+            </svg>
+            Protected by <strong>RifqyShield™</strong>
+        </div>
+
+        <div class="news-section">
+            <div class="news-header">
+                <div class="news-title">
+                    📰 Berita Terkini
+                    <span class="news-source">Google News ID</span>
+                </div>
+                <a href="https://news.google.com" target="_blank" style="font-size: 0.8rem; color: var(--accent-blue);">Lihat Semua &rarr;</a>
+            </div>
+
+            <div class="news-grid" id="news-grid">
+                <div class="news-card skeleton"></div>
+                <div class="news-card skeleton"></div>
+                <div class="news-card skeleton"></div>
+                <div class="news-card skeleton"></div>
+            </div>
         </div>
 
     </div>
 
     <footer>
-        &copy; 2025 RifqySearch
+        &copy; 2025 RifqySearch AI Inc. <br> Powered by Google Programmable Search
     </footer>
+
+    <script>
+        // --- LOGIC PENGAMBIL BERITA ---
+        // Karena kita tidak bisa embed news.google.com langsung (CORS policy),
+        // Kita gunakan RSS Feed Google News yang dikonversi ke JSON.
+        
+        const RSS_URL = 'https://news.google.com/rss?hl=id-ID&gl=ID&ceid=ID:id';
+        const API_ENDPOINT = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(RSS_URL)}&api_key=your_api_key_here&count=6`; 
+        // Catatan: rss2json versi gratisan punya limit. 
+        // Jika limit habis, script ini akan fallback ke tampilan statis.
+        // Untuk penggunaan pribadi ringan, API key public biasanya cukup atau biarkan kosong (kadang work).
+        
+        // Kita pakai public endpoint tanpa key untuk demo (bisa kena rate limit):
+        const PUBLIC_ENDPOINT = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(RSS_URL)}`;
+
+        async function fetchNews() {
+            const grid = document.getElementById('news-grid');
+            
+            try {
+                const response = await fetch(PUBLIC_ENDPOINT);
+                const data = await response.json();
+
+                if (data.status === 'ok') {
+                    grid.innerHTML = ''; // Hapus skeleton
+                    
+                    // Loop 4 berita pertama
+                    data.items.slice(0, 4).forEach(item => {
+                        // Bersihkan tanggal
+                        const date = new Date(item.pubDate);
+                        const dateStr = date.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', hour: '2-digit', minute:'2-digit' });
+                        
+                        // Bersihkan judul (Google News suka nambahin " - Nama Media" di belakang)
+                        let cleanTitle = item.title.split(' - ')[0]; 
+                        let sourceName = item.title.split(' - ').pop() || 'News';
+
+                        const card = document.createElement('a');
+                        card.href = item.link;
+                        card.target = '_blank';
+                        card.className = 'news-card';
+                        card.innerHTML = `
+                            <h3>${cleanTitle}</h3>
+                            <div class="news-meta">
+                                <span>${sourceName}</span>
+                                <span>${dateStr}</span>
+                            </div>
+                        `;
+                        grid.appendChild(card);
+                    });
+                } else {
+                    throw new Error("Gagal memuat RSS");
+                }
+            } catch (error) {
+                console.error(error);
+                // Fallback jika API gagal/limit habis
+                grid.innerHTML = `
+                    <a href="https://news.google.com/topics/CAAqJggBCiJCAQAqJggBCiJCAQAqIHgBKyYICiIjQ0JBU0Vxd0pgQm91Q2hJTFVrZFdRMnh6RVJABKoBAzgBQA?hl=id-ID&gl=ID&ceid=ID%3Aid" target="_blank" class="news-card" style="justify-content:center; align-items:center; text-align:center;">
+                        <h3>🇮🇩 Top Stories Indonesia</h3>
+                        <p style="font-size:0.8rem; color:#aaa;">Klik untuk baca</p>
+                    </a>
+                    <a href="https://news.google.com/topics/CAAqKggKIiRDQkFTRlFvSUwyMHZNRGRqTVhZU0JXVnVMVWRDR2dKSlRpZ0FQAQ?hl=id-ID&gl=ID&ceid=ID%3Aid" target="_blank" class="news-card" style="justify-content:center; align-items:center; text-align:center;">
+                        <h3>💻 Teknologi</h3>
+                        <p style="font-size:0.8rem; color:#aaa;">Gadget & Startup</p>
+                    </a>
+                    <a href="https://news.google.com/topics/CAAqKggKIiRDQkFTRlFvSUwyMHZNRFp1ZEdvU0JXVnVMVWRDR2dKSlRpZ0FQAQ?hl=id-ID&gl=ID&ceid=ID%3Aid" target="_blank" class="news-card" style="justify-content:center; align-items:center; text-align:center;">
+                        <h3>💼 Ekonomi & Bisnis</h3>
+                        <p style="font-size:0.8rem; color:#aaa;">Pasar & Saham</p>
+                    </a>
+                     <a href="https://news.google.com/topics/CAAqKggKIiRDQkFTRlFvSUwyMHZNRFp1ZEdvU0JXVnVMVWRDR2dKSlRpZ0FQAQ?hl=id-ID&gl=ID&ceid=ID%3Aid" target="_blank" class="news-card" style="justify-content:center; align-items:center; text-align:center;">
+                        <h3>⚽ Olahraga</h3>
+                        <p style="font-size:0.8rem; color:#aaa;">Update Skor</p>
+                    </a>
+                `;
+            }
+        }
+
+        // Jalankan fetch saat load
+        fetchNews();
+    </script>
 
 </body>
 </html>
